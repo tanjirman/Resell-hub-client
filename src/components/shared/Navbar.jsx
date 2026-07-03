@@ -18,7 +18,7 @@ export default function Navbar() {
   const dropdownRef = useRef(null);
   const { router } = useRouter;
   const { data: session } = useSession();
-  console.log(session);
+  // console.log(session);
 
   useEffect(() => {
     function handleClickOutside(event) {
