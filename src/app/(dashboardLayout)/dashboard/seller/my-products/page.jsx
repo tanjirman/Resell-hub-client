@@ -7,9 +7,10 @@ import { FaEye, FaTrash } from "react-icons/fa";
 import { useSession } from "@/app/lib/auth-client";
 import { myProducts } from "@/app/lib/api/add-product/data";
 
-
 import EditProductModal from "@/components/sellerDashboard/EditModal";
 import Image from "next/image";
+import Swal from "sweetalert2";
+import { deleteProduct } from "@/app/lib/api/add-product/action";
 
 const MyProducts = () => {
   const { data: session } = useSession();
@@ -18,76 +19,90 @@ const MyProducts = () => {
 
   // Load Products
   const loadProducts = async () => {
-  if (!session?.user?.email) return;
-
-  const data = await myProducts(session.user.email);
-  setProducts(data);
-};
-
-useEffect(() => {
-  const setProductsData = async () => {
     if (!session?.user?.email) return;
 
-    try {
-      const data = await myProducts(session.user.email);
-      setProducts(data || []);
-    } catch (error) {
-      console.log(error);
-    }
+    const data = await myProducts(session.user.email);
+    setProducts(data);
   };
 
-  setProductsData();
-}, [session]);
+  useEffect(() => {
+    const setProductsData = async () => {
+      if (!session?.user?.email) return;
+
+      try {
+        const data = await myProducts(session.user.email);
+        setProducts(data || []);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    setProductsData();
+  }, [session]);
 
   // Delete Product
 
-//   const handleDelete = async (id) => {
-//     const confirmDelete = window.confirm(
-//       "Are you sure you want to delete this product?"
-//     );
+  const handleDelete = async (id) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    });
 
-//     if (!confirmDelete) return;
+    if (!result.isConfirmed) return;
 
-//     try {
-//       const result = await deleteProduct(id);
+    try {
+      const deleteResult = await deleteProduct(id);
 
-//       if (result.deletedCount > 0) {
-//         toast.success("Product Deleted");
+      if (deleteResult.deletedCount > 0) {
+        await Swal.fire({
+          title: "Deleted!",
+          text: "Product has been deleted successfully.",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        });
 
-//         loadProducts();
-//       }
-//     } catch (error) {
-//       toast.error("Delete Failed");
-//     }
-//   };
+        // Refresh product list
+        loadProducts();
+      } else {
+        Swal.fire({
+          title: "Failed!",
+          text: "Product could not be deleted.",
+          icon: "error",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Something went wrong.",
+        icon: "error",
+      });
 
+      console.error(error);
+    }
+  };
   return (
     <div className="rounded-2xl border border-white/10 bg-slate-900 p-6">
-
       <div className="flex items-center justify-between mb-8">
-
         <div>
-
-          <h2 className="text-2xl font-bold text-white">
-            My Products
-          </h2>
+          <h2 className="text-2xl font-bold text-white">My Products</h2>
 
           <p className="text-slate-400 mt-1">
             Total Products : {products.length}
           </p>
-
         </div>
-
       </div>
 
       <div className="overflow-x-auto rounded-xl">
-
         <table className="w-full">
-
           <thead className="border-b border-white/10">
-
             <tr className="text-left text-slate-400">
-
               <th className="pb-4">Product</th>
 
               <th className="pb-4">Category</th>
@@ -98,34 +113,20 @@ useEffect(() => {
 
               <th className="pb-4">Status</th>
 
-              <th className="pb-4 text-center">
-                Actions
-              </th>
-
+              <th className="pb-4 text-center">Actions</th>
             </tr>
-
           </thead>
 
           <tbody>
-
             {products.length === 0 ? (
-
               <tr>
-
-                <td
-                  colSpan={6}
-                  className="py-10 text-center text-slate-400"
-                >
+                <td colSpan={6} className="py-10 text-center text-slate-400">
                   No Products Found
                 </td>
-
               </tr>
-
             ) : (
-
               products.map((product) => (
-
-                              <tr
+                <tr
                   key={product._id}
                   className="border-b border-white/5 hover:bg-slate-800/40 transition"
                 >
@@ -136,6 +137,8 @@ useEffect(() => {
                       <Image
                         src={product.image}
                         alt={product.title}
+                        height={200}
+                        width={200}
                         className="w-16 h-16 rounded-xl object-cover border border-white/10"
                       />
 
@@ -153,9 +156,7 @@ useEffect(() => {
 
                   {/* Category */}
 
-                  <td className="text-slate-300">
-                    {product.category}
-                  </td>
+                  <td className="text-slate-300">{product.category}</td>
 
                   {/* Price */}
 
@@ -165,9 +166,7 @@ useEffect(() => {
 
                   {/* Quantity */}
 
-                  <td className="text-slate-300">
-                    {product.quantity}
-                  </td>
+                  <td className="text-slate-300">{product.quantity}</td>
 
                   {/* Status */}
 
@@ -181,7 +180,6 @@ useEffect(() => {
 
                   <td>
                     <div className="flex items-center justify-center gap-3">
-
                       {/* View */}
 
                       <Link
@@ -198,27 +196,22 @@ useEffect(() => {
                         refetch={loadProducts}
                       />
 
-                      {/* Delete */}
+                      {/* Delete  */}
 
                       <button
-                        // onClick={() => handleDelete(product._id)}
+                        onClick={() => handleDelete(product._id)}
                         className="rounded-lg bg-slate-800 p-2 transition hover:bg-red-600"
                       >
                         <FaTrash className="text-white" />
                       </button>
-
                     </div>
                   </td>
                 </tr>
               ))
             )}
-
           </tbody>
-
         </table>
-
       </div>
-
     </div>
   );
 };

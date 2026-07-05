@@ -12,3 +12,7 @@ export const updateProducts = async (data, id) => {
   const resData = await serverMutation(`/api/products/${id}`, 'PATCH', data);
   return resData;
 };
+
+export const deleteProduct = async (id) => {
+  return await serverMutation(`/api/products/${id}`, "DELETE");
+};
