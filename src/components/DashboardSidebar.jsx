@@ -75,10 +75,10 @@ const DashboardSidebar = () => {
       href: "/dashboard/seller/add-product",
     },
     {
-      key: "products",
+      key: "my-products",
       label: "My Products",
       icon: FaBoxOpen,
-      href: "/dashboard/seller/products",
+      href: "/dashboard/seller/my-products",
     },
     {
       key: "orders",

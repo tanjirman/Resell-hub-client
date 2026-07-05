@@ -3,7 +3,6 @@ import {
   FaDollarSign,
   FaCalendarDay,
   FaCalendarWeek,
-  FaCalendarAlt,
   FaArrowTrendUp,
 } from "react-icons/fa6";
 
