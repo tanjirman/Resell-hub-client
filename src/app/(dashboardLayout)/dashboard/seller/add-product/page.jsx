@@ -72,7 +72,7 @@ const AddProduct = () => {
       sellerEmail: session.user.email,
 
       createdAt: new Date(),
-      status: "available",
+      status: "pending",
     };
 
     const result = await addProducts(productData);

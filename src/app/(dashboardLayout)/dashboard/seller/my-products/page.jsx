@@ -11,6 +11,7 @@ import EditProductModal from "@/components/sellerDashboard/EditModal";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import { deleteProduct } from "@/app/lib/api/add-product/action";
+import { Chip } from "@heroui/react";
 
 const MyProducts = () => {
   const { data: session } = useSession();
@@ -171,9 +172,19 @@ const MyProducts = () => {
                   {/* Status */}
 
                   <td>
-                    <span className="rounded-full bg-green-500/20 px-3 py-1 text-xs font-medium text-green-400">
+                    <Chip
+                      className={
+                        product.status === "accepted"
+                          ? "bg-green-500/10 text-green-400"
+                          : product.status === "pending"
+                            ? "bg-yellow-500/10 text-yellow-400"
+                            : product.status === "delivered"
+                              ? "bg-blue-500/10 text-blue-400"
+                              : "bg-red-500/10 text-red-400"
+                      }
+                    >
                       {product.status}
-                    </span>
+                    </Chip>
                   </td>
 
                   {/* Actions */}

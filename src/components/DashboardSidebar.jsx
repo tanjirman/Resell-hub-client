@@ -22,11 +22,12 @@ import {
 } from "react-icons/fa";
 import { authClient, useSession } from "@/app/lib/auth-client";
 import Logo from "./Logo";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const DashboardSidebar = () => {
   const { data: session } = useSession();
   const { router } = useRouter;
+  const pathname = usePathname();
 
   const buyerMenu = [
     {
@@ -84,7 +85,7 @@ const DashboardSidebar = () => {
       key: "orders",
       label: "Manage Orders",
       icon: FaShoppingBag,
-      href: "/dashboard/seller/orders",
+      href: "/dashboard/seller/manage-orders",
     },
     {
       key: "analytics",
@@ -192,23 +193,38 @@ const DashboardSidebar = () => {
               Navigation
             </p>
             {menuItems?.map(({ key, label, icon: Icon, href }) => {
-              return (
-                <Link
-                  key={key}
-                  href={href}
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-white text-sm font-semibold transition-all duration-150 text-left cursor-pointer "text-slate-400 hover:text-white hover:bg-white/5"
-                `}
-                >
-                  <span
-                    className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors "bg-white/5 text-slate-400"}`}
-                  >
-                    <Icon size={14} />
-                  </span>
-                  <span>{label}</span>
-                  {/* {isActive && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-pink-400" />} */}
-                </Link>
-              );
-            })}
+  const isActive = pathname === href;
+
+  return (
+    <Link
+      key={key}
+      href={href}
+      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200
+        ${
+          isActive
+            ? "bg-indigo-600 text-white shadow-lg"
+            : "text-slate-400 hover:text-white hover:bg-white/5"
+        }`}
+    >
+      <span
+        className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors
+          ${
+            isActive
+              ? "bg-white/20 text-white"
+              : "bg-white/5 text-slate-400"
+          }`}
+      >
+        <Icon size={14} />
+      </span>
+
+      <span>{label}</span>
+
+      {isActive && (
+        <span className="ml-auto w-2 h-2 rounded-full bg-white"></span>
+      )}
+    </Link>
+  );
+})}
           </nav>
 
           {/* Bottom Links */}

@@ -176,6 +176,8 @@ export default function EditProductModal({ product, refetch }) {
                       <Image
                         src={product.image}
                         alt={product.title}
+                        height={200}
+                        width={200}
                         className="w-28 h-28 rounded-xl object-cover border border-white/10 mb-4"
                       />
                     )}
