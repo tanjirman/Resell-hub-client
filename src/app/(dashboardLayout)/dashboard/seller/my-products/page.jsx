@@ -24,6 +24,12 @@ const MyProducts = () => {
 
     const data = await myProducts(session.user.email);
     setProducts(data);
+//     const data = await myProducts(session.user.email);
+
+// console.log(data);
+// console.log(Array.isArray(data));
+
+// setProducts(data);
   };
 
   useEffect(() => {
@@ -194,7 +200,7 @@ const MyProducts = () => {
                       {/* View */}
 
                       <Link
-                        href={`/dashboard/seller/my-products/${product._id}`}
+                        href={`/products/${product._id}`}
                         className="rounded-lg bg-slate-800 p-2 transition hover:bg-cyan-600"
                       >
                         <FaEye className="text-white" />
