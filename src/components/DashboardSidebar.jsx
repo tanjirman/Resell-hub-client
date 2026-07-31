@@ -91,7 +91,7 @@ const DashboardSidebar = () => {
       key: "analytics",
       label: "Sales Analytics",
       icon: FaChartLine,
-      href: "/dashboard/seller/analytics",
+      href: "/dashboard/seller/sales-analytics",
     },
     {
       key: "profile",
