@@ -58,7 +58,7 @@ const DashboardSidebar = () => {
       key: "profile",
       label: "Profile",
       icon: FaUserCircle,
-      href: "/dashboard/buyer/profile",
+      href: "/dashboard/profile",
     },
   ];
 
@@ -97,7 +97,7 @@ const DashboardSidebar = () => {
       key: "profile",
       label: "Profile",
       icon: FaUserCircle,
-      href: "/dashboard/seller/profile",
+      href: "/dashboard/profile",
     },
   ];
 
