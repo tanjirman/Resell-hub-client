@@ -8,6 +8,9 @@ import { FaHeart, FaShoppingCart } from "react-icons/fa";
 import { useSession } from "@/app/lib/auth-client";
 import { createOrder } from "@/app/lib/api/orders/data";
 
+import { addWishlist } from "@/app/lib/api/wishlist/data";
+
+
 export default function ProductActionButtons({ product }) {
   const router = useRouter();
   const { data: session } = useSession();
@@ -91,13 +94,48 @@ export default function ProductActionButtons({ product }) {
     }
   };
 
-  const handleWishlist = () => {
+  const handleWishlist = async () => {
+  if (!session?.user) {
+    return Swal.fire({
+      icon: "warning",
+      title: "Login Required",
+      text: "Please login first.",
+    });
+  }
+
+  if (session.user.role !== "buyer") {
+    return Swal.fire({
+      icon: "error",
+      title: "Only Buyers",
+      text: "Only buyers can add products to wishlist.",
+    });
+  }
+
+  const wishlistData = {
+    buyerId: session.user.id,
+    buyerName: session.user.name,
+    buyerEmail: session.user.email,
+
+    productId: product._id,
+  };
+
+  const res = await addWishlist(wishlistData);
+
+  if (res.success) {
+    Swal.fire({
+      icon: "success",
+      title: "Added to Wishlist",
+      timer: 1500,
+      showConfirmButton: false,
+    });
+    router.push("/dashboard/buyer/wishlists");
+  } else {
     Swal.fire({
       icon: "info",
-      title: "Coming Soon",
-      text: "Wishlist functionality will be added next.",
+      title: res.message,
     });
-  };
+  }
+};
 
   return (
     <div className="flex flex-wrap gap-5">
@@ -113,14 +151,14 @@ export default function ProductActionButtons({ product }) {
           </Button>
 
           <Button
-            size="lg"
-            variant="bordered"
-            startContent={<FaHeart />}
-            onPress={handleWishlist}
-            className="border-violet-500 text-violet-400"
-          >
-            Wishlist
-          </Button>
+  size="lg"
+  variant="bordered"
+  startContent={<FaHeart />}
+  className="border-violet-500 text-violet-400"
+  onClick={handleWishlist}
+>
+ <FaHeart /> Wishlist
+</Button>
         </>
       )}
 

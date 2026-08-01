@@ -24,12 +24,7 @@ const MyProducts = () => {
 
     const data = await myProducts(session.user.email);
     setProducts(data);
-//     const data = await myProducts(session.user.email);
 
-// console.log(data);
-// console.log(Array.isArray(data));
-
-// setProducts(data);
   };
 
   useEffect(() => {

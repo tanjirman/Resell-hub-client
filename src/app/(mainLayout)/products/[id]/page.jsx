@@ -8,8 +8,6 @@ import {
   FaUser,
   FaEnvelope,
   FaCheckCircle,
-  FaShoppingCart,
-  FaHeart,
 } from "react-icons/fa";
 import { baseURL } from "@/app/lib/api/baseUrl";
 import ProductActionButtons from "@/components/ProductActionButtons";
@@ -19,15 +17,15 @@ import ProductActionButtons from "@/components/ProductActionButtons";
 const fetchProduct = async (id) => {
   const url = `${baseURL}/api/products/${id}`;
 
-  // console.log("URL:", url);
+  console.log("Fetching:", url);
 
   const res = await fetch(url);
 
-  // console.log("STATUS:", res.status);
+  console.log("Status:", res.status);
 
   const data = await res.json();
 
-  // console.log("DATA:", data);
+  console.log("Response:", data);
 
   return data;
 };
@@ -62,8 +60,8 @@ export default async function ProductDetailsPage({ params }) {
           <Card className="overflow-hidden bg-[#111111] border border-white/10">
             <div className="relative h-137.5">
               <Image
-                src={product?.image}
-                alt={product?.title}
+                src={product?.image || "/placeholder-product.png"}
+                alt={product?.title || "Product"}
                 width={1200}
                 height={1000}
                 className="w-full h-125 object-cover rounded-xl"

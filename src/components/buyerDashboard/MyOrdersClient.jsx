@@ -214,7 +214,7 @@ export default function MyOrdersClient() {
                       <div className="flex justify-center gap-3">
                         {/* View Details */}
                         <Link
-                          href={`/buyer-dashboard/my-orders/${order._id}`}
+                          href={`/products/${order.productId}`}
                           className="rounded-lg bg-blue-600 p-2 text-white transition hover:bg-blue-700"
                           title="View Details"
                         >

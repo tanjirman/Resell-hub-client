@@ -46,7 +46,7 @@ const DashboardSidebar = () => {
       key: "wishlist",
       label: "Wishlist",
       icon: FaHeart,
-      href: "/dashboard/buyer/wishlist",
+      href: "/dashboard/buyer/wishlists",
     },
     {
       key: "payments",
