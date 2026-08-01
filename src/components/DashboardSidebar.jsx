@@ -40,7 +40,7 @@ const DashboardSidebar = () => {
       key: "orders",
       label: "My Orders",
       icon: FaHistory,
-      href: "/dashboard/buyer/orders",
+      href: "/dashboard/buyer/my-orders",
     },
     {
       key: "wishlist",

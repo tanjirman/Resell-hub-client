@@ -12,6 +12,7 @@ import {
   FaHeart,
 } from "react-icons/fa";
 import { baseURL } from "@/app/lib/api/baseUrl";
+import ProductActionButtons from "@/components/ProductActionButtons";
 
 // import { baseURL } from "@/lib/api/baseUrl";
 
@@ -169,22 +170,9 @@ export default async function ProductDetailsPage({ params }) {
             {/* Buttons */}
 
             <div className="flex flex-wrap gap-5">
-              <Button
-                size="lg"
-                startContent={<FaShoppingCart />}
-                className="bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-semibold px-10"
-              >
-                Buy Now
-              </Button>
+              <ProductActionButtons product={product} />
 
-              <Button
-                size="lg"
-                variant="bordered"
-                startContent={<FaHeart />}
-                className="border-violet-500 text-violet-400"
-              >
-                Wishlist
-              </Button>
+              
             </div>
           </div>
         </div>
