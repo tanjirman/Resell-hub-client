@@ -6,7 +6,7 @@ export default function WishlistPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-2xl font-bold text-white mb-8">Sales Analytics</h2>
+        <h2 className="text-2xl font-bold text-white mb-8">My Wishlist</h2>
       </div>
 
       <WishlistClient />

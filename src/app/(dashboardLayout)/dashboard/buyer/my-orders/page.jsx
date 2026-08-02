@@ -5,10 +5,9 @@ import MyOrdersClient from "@/components/buyerDashboard/MyOrdersClient";
 const MyOrdersPage = () => {
   return (
     <div className="space-y-6">
-      {/* <DashboardHeading
-        title="My Orders"
-        description="View, track, and manage all your orders."
-      /> */}
+      <div>
+        <h2 className="text-2xl font-bold text-white mb-8">My Orders</h2>
+      </div>
 
       <MyOrdersClient />
     </div>

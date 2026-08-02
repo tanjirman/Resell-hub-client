@@ -52,7 +52,7 @@ const DashboardSidebar = () => {
       key: "payments",
       label: "Payment History",
       icon: FaWallet,
-      href: "/dashboard/buyer/payments",
+      href: "/dashboard/buyer/payment-history",
     },
     {
       key: "profile",

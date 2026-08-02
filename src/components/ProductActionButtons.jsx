@@ -49,51 +49,63 @@ export default function ProductActionButtons({ product }) {
     }
 
     try {
-      const orderData = {
-        buyerId: session.user.id,
-        buyerName: session.user.name,
-        buyerEmail: session.user.email,
+  const orderData = {
+    buyerId: session.user.id,
+    buyerName: session.user.name,
+    buyerEmail: session.user.email,
 
-        sellerId: product.sellerId,
-        sellerName: product.sellerName,
-        sellerEmail: product.sellerEmail,
+    sellerId: product.sellerId,
+    sellerName: product.sellerName,
+    sellerEmail: product.sellerEmail,
 
-        productId: product._id,
-
-        quantity: 1,
-      };
-
-      const res = await createOrder(orderData);
-
-      if (res.success) {
-        Swal.fire({
-          icon: "success",
-          title: "Order Placed!",
-          text: "Your order has been placed successfully.",
-          timer: 1800,
-          showConfirmButton: false,
-        });
-
-        router.push("/dashboard/buyer/my-orders");
-        router.refresh();
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Order Failed",
-          text: res.message || "Something went wrong.",
-        });
-      }
-    } catch (error) {
-      console.error(error);
-
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Failed to place order.",
-      });
-    }
+    productId: product._id,
+    quantity: 1,
   };
 
+  const res = await createOrder(orderData);
+
+  if (!res.success) {
+    Swal.fire({
+      icon: "error",
+      title: "Order Failed",
+      text: res.message,
+    });
+    return;
+  }
+
+  const response = await fetch("/api/checkout_sessions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      orderId: res.order._id,
+    }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    Swal.fire({
+      icon: "error",
+      title: "Payment Error",
+      text: data.message || "Unable to start payment.",
+    });
+    return;
+  }
+
+  // Redirect to Stripe Checkout
+  window.location.href = data.url;
+} catch (error) {
+  console.error(error);
+
+  Swal.fire({
+    icon: "error",
+    title: "Error",
+    text: "Failed to start payment.",
+  });
+}
+};
   const handleWishlist = async () => {
   if (!session?.user) {
     return Swal.fire({
