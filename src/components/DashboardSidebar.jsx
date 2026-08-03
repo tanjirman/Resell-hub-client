@@ -112,7 +112,7 @@ const DashboardSidebar = () => {
       key: "users",
       label: "Manage Users",
       icon: FaUsers,
-      href: "/dashboard/admin/users",
+      href: "/dashboard/admin/manage-users",
     },
     {
       key: "products",

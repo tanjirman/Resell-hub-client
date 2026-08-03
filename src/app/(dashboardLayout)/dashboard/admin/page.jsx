@@ -4,10 +4,9 @@ import DashboardOverviewClient from "@/components/adminDashboard/DashboardOvervi
 export default function AdminDashboardPage() {
   return (
     <div>
-      {/* <DashboardHeading
-        title="Dashboard Overview"
-        description="The admin has full control over the platform."
-      /> */}
+      <div>
+        <h2 className="text-2xl font-bold text-white mb-8">Overview</h2>
+      </div>
 
       <DashboardOverviewClient />
     </div>
