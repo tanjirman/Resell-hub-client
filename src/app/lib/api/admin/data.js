@@ -44,6 +44,7 @@ export const getAllProducts = async () => {
   return await res.json();
 };
 
+// manage product
 export const approveProduct = async (id) => {
   const res = await fetch(
     `${baseURL}/api/admin/products/${id}/approve`,
@@ -73,6 +74,24 @@ export const deleteProduct = async (id) => {
       method: "DELETE",
     }
   );
+
+  return await res.json();
+};
+
+// manage order
+export const getAllOrders = async () => {
+  const res = await fetch(`${baseURL}/api/admin/orders`);
+  return await res.json();
+};
+
+export const updateAdminOrderStatus = async (id, status) => {
+  const res = await fetch(`${baseURL}/api/admin/orders/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ status }),
+  });
 
   return await res.json();
 };
