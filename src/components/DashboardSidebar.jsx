@@ -118,13 +118,13 @@ const DashboardSidebar = () => {
       key: "products",
       label: "Manage Products",
       icon: FaBoxOpen,
-      href: "/dashboard/admin/products",
+      href: "/dashboard/admin/manage-products",
     },
     {
       key: "orders",
       label: "Manage Orders",
       icon: FaClipboardList,
-      href: "/dashboard/admin/orders",
+      href: "/dashboard/admin/manage-orders",
     },
     {
       key: "analytics",

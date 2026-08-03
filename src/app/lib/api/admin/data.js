@@ -38,3 +38,41 @@ export const deleteUser = async (id) => {
 
   return await res.json();
 };
+
+export const getAllProducts = async () => {
+  const res = await fetch(`${baseURL}/api/admin/products`);
+  return await res.json();
+};
+
+export const approveProduct = async (id) => {
+  const res = await fetch(
+    `${baseURL}/api/admin/products/${id}/approve`,
+    {
+      method: "PATCH",
+    }
+  );
+
+  return await res.json();
+};
+
+export const rejectProduct = async (id) => {
+  const res = await fetch(
+    `${baseURL}/api/admin/products/${id}/reject`,
+    {
+      method: "PATCH",
+    }
+  );
+
+  return await res.json();
+};
+
+export const deleteProduct = async (id) => {
+  const res = await fetch(
+    `${baseURL}/api/admin/products/${id}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  return await res.json();
+};
